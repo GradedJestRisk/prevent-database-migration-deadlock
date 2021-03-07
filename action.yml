@@ -1,0 +1,9 @@
+name: 'Prevent database migration deadlock'
+description: 'Warn if PR merge would cause 2 migration files to be shipped together in next release'
+inputs:
+  migration-directory:
+    description: 'Direction that contains database migration'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'

@@ -18,8 +18,6 @@
   },
   "homepage": "https://github.com/GradedJestRisk/github-action-training#readme",
   "dependencies": {
-    "@actions/core": "^1.2.6",
-    "@actions/github": "^4.0.0",
-    "simple-git": "^2.36.1"
+    "@actions/core": "^1.2.6"
   }
 }

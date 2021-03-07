@@ -7,21 +7,38 @@ const migrationDirectory = core.getInput('migration-directory');
 
 const nextReleaseWillContainsMigration = function() {
 
-   const rawCount = execSync('git diff --name-only origin/main $(git describe --tags `git rev-list --tags --max-count=1`) | grep --count ' + migrationDirectory ).toString().trim();
+   let rawCount;
+
+   try {
+      rawCount = execSync('git diff --name-only origin/main $(git describe --tags `git rev-list --tags --max-count=1`) | grep --count ' + migrationDirectory ).toString().trim();
+   } catch(error){
+      if (error.status === 1) {
+         rawCount = '0';
+      }
+   }
    const count = parseInt(rawCount);
+
    // migrations/bar => 1
 
-   console.log(`In next release: count ${count}`);
+   console.log(`In next release: ${count} migration(s)`);
    return (count !== 0);
 }
 
 const branchContainsMigration = function() {
 
-   const rawCount = execSync('git diff --name-only origin/main | grep --count ' + migrationDirectory).toString().trim();
+   let rawCount;
+
+   try {
+      rawCount = execSync('git diff --name-only origin/main | grep --count ' + migrationDirectory).toString().trim()
+   } catch(error){
+      if (error.status === 1) {
+         rawCount = '0';
+      }
+   }
    // migrations/foobar => 1
    const count = parseInt(rawCount);
-   
-   console.log(`To be merged migration count: ${count}`);
+
+   console.log(`To be merged : ${count} migration(s)`);
    return (count !== 0);
 }
 
